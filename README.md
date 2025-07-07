@@ -163,6 +163,10 @@ By default, the program will use the profiles specified in `settings.js`. You ca
 
 Some of the node modules that we depend on have bugs in them. To add a patch, change your local node module file and run `npx patch-package [package-name]`
 
+## Collaborative Commands
+
+Use `!teamGoal("Build a house")` to broadcast a shared goal to all bots online. Each agent will collaborate and divide the workload automatically.
+
 ## Citation:
 
 ```

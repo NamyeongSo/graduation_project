@@ -1,6 +1,8 @@
 import * as skills from '../library/skills.js';
 import settings from '../../../settings.js';
 import convoManager from '../conversation.js';
+import { serverProxy } from '../agent_proxy.js';
+import { executeCommand } from './index.js';
 
 
 function runAsAction (actionFn, resume = false, timeout = -1) {
@@ -463,5 +465,21 @@ export const actionsList = [
         perform: runAsAction(async (agent, distance) => {
             await skills.digDown(agent.bot, distance)
         })
+    },
+    {
+        name: '!teamGoal',
+        description: 'Broadcast a collaborative goal to all online bots.',
+        params: { 'goal': { type: 'string', description: 'Goal for all agents.' } },
+        perform: async function(agent, goal) {
+            const agents = convoManager.getInGameAgents();
+            if (agents.length <= 1) return 'No other agents in game.';
+            const others = agents.filter(n => n !== agent.name).join(', ');
+            const collabGoal = `${goal} Collaborate with ${others} and divide the workload evenly.`;
+            for (const a of agents)
+                serverProxy.getSocket().emit('send-message', a, `!goal("${collabGoal}")`);
+            if (!agents.includes(agent.name))
+                await executeCommand(agent, `!goal("${collabGoal}")`);
+            return `Team goal started for: ${agents.join(', ')}`;
+        }
     },
 ];
