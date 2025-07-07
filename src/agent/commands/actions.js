@@ -414,7 +414,7 @@ export const actionsList = [
             if (!convoManager.inConversation(player_name))
                 return `Not in conversation with ${player_name}.`;
             convoManager.endConversation(player_name);
-            return `Converstaion with ${player_name} ended.`;
+            return `Conversation with ${player_name} ended.`;
         }
     },
     {
