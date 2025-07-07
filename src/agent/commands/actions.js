@@ -6,6 +6,7 @@ import { executeCommand } from './index.js';
 import { teamGoalManager } from '../team_goal_manager.js';
 
 
+
 function runAsAction (actionFn, resume = false, timeout = -1) {
     let actionLabel = null;  // Will be set on first use
     

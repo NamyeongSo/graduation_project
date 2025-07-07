@@ -173,6 +173,7 @@ Use `!teamGoal(id)` to start one of the predefined team challenges from `tasks/t
 
 This sends challenge `1` to all online bots and starts timing until one bot ends the goal with `!endGoal`.
 
+
 ## Citation:
 
 ```
