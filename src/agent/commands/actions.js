@@ -3,6 +3,7 @@ import settings from '../../../settings.js';
 import convoManager from '../conversation.js';
 import { serverProxy } from '../agent_proxy.js';
 import { executeCommand } from './index.js';
+import { teamGoalManager } from '../team_goal_manager.js';
 
 
 function runAsAction (actionFn, resume = false, timeout = -1) {
@@ -386,7 +387,11 @@ export const actionsList = [
         description: 'Call when you have accomplished your goal. It will stop self-prompting and the current action. ',
         perform: async function (agent) {
             agent.self_prompter.stop();
-            return 'Self-prompting stopped.';
+            let msg = 'Self-prompting stopped.';
+            const elapsed = teamGoalManager.markComplete(agent.name);
+            if (elapsed !== null)
+                msg += ` Team goal completed in ${Math.round(elapsed / 1000)}s.`;
+            return msg;
         }
     },
     {
@@ -469,17 +474,21 @@ export const actionsList = [
     {
         name: '!teamGoal',
         description: 'Broadcast a collaborative goal to all online bots.',
-        params: { 'goal': { type: 'string', description: 'Goal for all agents.' } },
-        perform: async function(agent, goal) {
+        params: { 'challengeId': { type: 'string', description: 'Challenge ID from team_challenges.json.' } },
+        perform: async function(agent, challengeId) {
+            const challenge = teamGoalManager.getChallenge(challengeId);
+            if (!challenge)
+                return `Unknown challenge ${challengeId}`;
             const agents = convoManager.getInGameAgents();
             if (agents.length <= 1) return 'No other agents in game.';
             const others = agents.filter(n => n !== agent.name).join(', ');
-            const collabGoal = `${goal} Collaborate with ${others} and divide the workload evenly.`;
+            const collabGoal = `${challenge.description} Collaborate with ${others} and divide the workload evenly.`;
+            teamGoalManager.start(challengeId, agents);
             for (const a of agents)
                 serverProxy.getSocket().emit('send-message', a, `!goal("${collabGoal}")`);
             if (!agents.includes(agent.name))
                 await executeCommand(agent, `!goal("${collabGoal}")`);
-            return `Team goal started for: ${agents.join(', ')}`;
+            return `Team goal ${challengeId} started for: ${agents.join(', ')}`;
         }
     },
 ];

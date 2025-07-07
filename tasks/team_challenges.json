@@ -1,0 +1,146 @@
+{
+  "0": {
+    "achivement": "Taking Inventory",
+    "dependency": -1,
+    "description": "Open your inventory.",
+    "detailed_description": "Open your inventory."
+  },
+  "1": {
+    "achivement": "Getting Wood",
+    "dependency": 0,
+    "description": "Punch a tree until a block of wood pops out.",
+    "detailed_description": "Pick up a log from the ground."
+  },
+  "2": {
+    "achivement": "Benchmaking",
+    "dependency": 1,
+    "description": "Craft a workbench with four blocks of wooden planks.",
+    "detailed_description": "Pick up a crafting table from the inventory's crafting field output or a crafting table output."
+  },
+  "3": {
+    "achivement": "Time to Mine!",
+    "dependency": 2,
+    "description": "Use planks and sticks to make a pickaxe.",
+    "detailed_description": "Pick up any type of pickaxe from a crafting table output."
+  },
+  "4": {
+    "achivement": "Getting an Upgrade",
+    "dependency": 3,
+    "description": "Construct a better pickaxe.",
+    "detailed_description": "Pick up a stone pickaxe from a crafting table output."
+  },
+  "5": {
+    "achivement": "Hot Topic",
+    "dependency": 2,
+    "description": "Construct a furnace out of eight cobblestone blocks.",
+    "detailed_description": "Pick up a furnace from a crafting table output."
+  },
+  "6": {
+    "achivement": "Acquire Hardware",
+    "dependency": 5,
+    "description": "Smelt an iron ingot",
+    "detailed_description": "Pick up an iron ingot from a furnace output."
+  },
+  "7": {
+    "achivement": "Time to Farm!",
+    "dependency": 2,
+    "description": "Make a Hoe.",
+    "detailed_description": "Pick up any type of hoe from a crafting table output."
+  },
+  "8": {
+    "achivement": "Bake Bread",
+    "dependency": 5,
+    "description": "Turn wheat into bread.",
+    "detailed_description": "Pick up bread from a crafting table output."
+  },
+  "9": {
+    "achivement": "The Lie",
+    "dependency": 7,
+    "description": "Bake a cake using: wheat, sugar, milk, and eggs",
+    "detailed_description": "Pick up a cake from a crafting table output."
+  },
+  "10": {
+    "achivement": "Delicious Fish",
+    "dependency": 5,
+    "description": "Catch and cook a fish!",
+    "detailed_description": "Pick up a cooked cod after cooking it in a Furnace, Smoker, Campfire, or Soul Campfire. Doesn't work if the block used is hooked up to a hopper, as the player is not getting the item directly from the output."
+  },
+  "11": {
+    "achivement": "On A Rail",
+    "dependency": 6,
+    "description": "Travel by minecart to a point at least 500m in a single direction from where you started",
+    "detailed_description": "Travel by minecart 500 blocks in a straight line away from the player's starting point."
+  },
+  "12": {
+    "achivement": "Time to Strike!",
+    "dependency": 2,
+    "description": "Use planks and sticks to make a sword.",
+    "detailed_description": "Pick up any type of sword from a crafting table output."
+  },
+  "13": {
+    "achivement": "Monster Hunter",
+    "dependency": 12,
+    "description": "Attack and destroy a monster.",
+    "detailed_description": "Kill a hostile mob or one of the following neutral mobs: an enderman, a piglin, a zombified piglin, a spider, or a cave spider."
+  },
+  "14": {
+    "achivement": "Cow Tipper",
+    "dependency": 12,
+    "description": "Harvest some leather.",
+    "detailed_description": "Pick up leather from the ground."
+  },
+  "15": {
+    "achivement": "When Pigs Fly",
+    "dependency": -2,
+    "description": "Use a saddle to ride a pig, and then have the pig get hurt from fall damage while riding it.",
+    "detailed_description": "Be riding a pig (e.g. using a saddle) when it hits the ground with a fall distance greater than 5."
+  },
+  "16": {
+    "achivement": "Sniper Due",
+    "dependency": -2,
+    "description": "Kill a Skeleton with an arrow from more than 50 meters.",
+    "detailed_description": "Use a launched arrow to kill a skeleton, spider jockey, wither skeleton, or a stray from 50 or more blocks away, horizontally."
+  },
+  "17": {
+    "achivement": "DIAMONDS!",
+    "dependency": 11,
+    "description": "Acquire diamonds with your iron tools.",
+    "detailed_description": "Pick up a diamond from the ground."
+  },
+  "18": {
+    "achivement": "Repopulation",
+    "dependency": 14,
+    "description": "Breed two cows with wheat.",
+    "detailed_description": "Breed two cows or two mooshrooms."
+  },
+  "19": {
+    "achivement": "Diamonds to you!",
+    "dependency": 17,
+    "description": "Throw diamonds at another player.",
+    "detailed_description": "Drop a diamond. Another player or a mob must then pick up this diamond."
+  },
+  "20": {
+    "achivement": "Overpowered",
+    "dependency": 4,
+    "description": "Eat an Enchanted Apple",
+    "detailed_description": "Eat an Enchanted Apple"
+  },
+  "21": {
+    "achivement": "Enchanter",
+    "dependency": 17,
+    "description": "Construct an Enchantment Table.",
+    "detailed_description": "Pick up an enchantment table from a crafting table output."
+  },
+  "22": {
+    "achivement": "Librarian",
+    "dependency": 21,
+    "description": "Build some bookshelves to improve your enchantment table.",
+    "detailed_description": "Pick up a bookshelf from a crafting table output."
+  },
+  "23": {
+    "achivement": "Overkill",
+    "dependency": -2,
+    "description": "Deal nine hearts of damage in a single hit.",
+    "detailed_description": "Damage can be dealt to any mob, even those that do not have nine hearts of health overall."
+  }
+}

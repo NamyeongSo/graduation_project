@@ -165,7 +165,13 @@ Some of the node modules that we depend on have bugs in them. To add a patch, ch
 
 ## Collaborative Commands
 
-Use `!teamGoal("Build a house")` to broadcast a shared goal to all bots online. Each agent will collaborate and divide the workload automatically.
+Use `!teamGoal(id)` to start one of the predefined team challenges from `tasks/team_challenges.json`. The bots will collaborate on the challenge and report completion time. Example:
+
+```
+!teamGoal("1")
+```
+
+This sends challenge `1` to all online bots and starts timing how long it takes until every bot calls `!endGoal`.
 
 ## Citation:
 
