@@ -163,6 +163,16 @@ By default, the program will use the profiles specified in `settings.js`. You ca
 
 Some of the node modules that we depend on have bugs in them. To add a patch, change your local node module file and run `npx patch-package [package-name]`
 
+## Collaborative Commands
+
+Use `!teamGoal(id)` to start one of the predefined team challenges from `tasks/team_challenges.json`. The bots automatically open conversations with each other to divide roles, then collaborate until one of them completes the challenge. When any bot ends the goal, all bots stop. Example:
+
+```
+!teamGoal("1")
+```
+
+This sends challenge `1` to all online bots and starts timing until one bot ends the goal with `!endGoal`.
+
 ## Citation:
 
 ```

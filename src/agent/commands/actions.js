@@ -1,6 +1,9 @@
 import * as skills from '../library/skills.js';
 import settings from '../../../settings.js';
 import convoManager from '../conversation.js';
+import { serverProxy } from '../agent_proxy.js';
+import { executeCommand } from './index.js';
+import { teamGoalManager } from '../team_goal_manager.js';
 
 
 function runAsAction (actionFn, resume = false, timeout = -1) {
@@ -381,10 +384,22 @@ export const actionsList = [
     },
     {
         name: '!endGoal',
-        description: 'Call when you have accomplished your goal. It will stop self-prompting and the current action. ',
+        description: 'Call when you have accomplished your goal. It stops all actions and self prompting.',
         perform: async function (agent) {
             agent.self_prompter.stop();
-            return 'Self-prompting stopped.';
+            await agent.actions.stop();
+            agent.clearBotLogs();
+            agent.actions.cancelResume();
+            agent.bot.emit('idle');
+            let msg = 'Self-prompting stopped.';
+            const elapsed = teamGoalManager.markComplete(agent.name);
+            if (elapsed !== null) {
+                msg += ` Team goal completed in ${Math.round(elapsed / 1000)}s.`;
+                const others = convoManager.getInGameAgents().filter(n => n !== agent.name);
+                for (const o of others)
+                    serverProxy.getSocket().emit('send-message', o, '!endGoal()');
+            }
+            return msg;
         }
     },
     {
@@ -463,5 +478,40 @@ export const actionsList = [
         perform: runAsAction(async (agent, distance) => {
             await skills.digDown(agent.bot, distance)
         })
+    },
+    {
+        name: '!teamGoal',
+        description: 'Broadcast a collaborative goal to all online bots.',
+        params: { 'challengeId': { type: 'string', description: 'Challenge ID from team_challenges.json.' } },
+        perform: async function(agent, challengeId) {
+            const challenge = teamGoalManager.getChallenge(challengeId);
+            if (!challenge)
+                return `Unknown challenge ${challengeId}`;
+
+            const agents = convoManager.getInGameAgents();
+            if (agents.length <= 1) return 'No other agents in game.';
+            const others = agents.filter(n => n !== agent.name).join(', ');
+            const collabGoal = `${challenge.description} Collaborate with ${others} and divide the workload evenly. Keep communicating about progress.`;
+            const goalStr = JSON.stringify(collabGoal);
+            const planMsg = JSON.stringify(`Let's plan our roles for: ${challenge.description}`);
+
+            teamGoalManager.start(challengeId, agents);
+
+            // Start planning conversations among all bots
+            for (const a1 of agents) {
+                for (const a2 of agents) {
+                    if (a1 !== a2)
+                        serverProxy.getSocket().emit('send-message', a1, `!startConversation("${a2}", ${planMsg})`);
+                }
+            }
+
+            // Begin the collaborative goal
+            for (const a of agents)
+                serverProxy.getSocket().emit('send-message', a, `!goal(${goalStr})`);
+            if (!agents.includes(agent.name))
+                await executeCommand(agent, `!goal(${goalStr})`);
+
+            return `Team goal ${challengeId} started for: ${agents.join(', ')}`;
+        }
     },
 ];
